@@ -25,6 +25,7 @@ const Home = () => {
             <div className="homeItems">
                 <h1>ホーム</h1>
                 <p>現在は22:00です。</p>
+                
             </div>
 
         </div>
