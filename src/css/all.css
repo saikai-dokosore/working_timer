@@ -1,0 +1,30 @@
+
+@import url('https://use.fontawesome.com/releases/v5.6.1/css/all.css');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap');
+
+:root {
+  --Black-text: #606060;
+  --White-text: #ececec;
+  --Gray-text: #9c9c9c;
+  --Black-background: #2F2F2F;
+  --White-background: #FFFFFF;
+  --Gray-background: #F6F6F6;
+  --Black-line: #727272;
+  --White-line: #EAEAEA;
+  --Gray-line: #C4C4C4;
+  --Gray-enable: #DDDDDD;
+  --Blue-enable: #61C6FF;
+  --Red-enable: #FF6161;
+}
+
+
+body {
+  background-color: var(--Gray-background);
+  color: var(--Black-text);
+  font: 14px 'Lato', 'Noto Sans JP', sans-serif;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
+}
