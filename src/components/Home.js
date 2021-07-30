@@ -13,7 +13,7 @@ const API_KEY = "AIzaSyDeOz1nvw1M6om8N9xcoVJaXq2B8oDfgO0";
 const scope = "https://www.googleapis.com/auth/spreadsheets";
 
 const Home = () => {
-  const [memo, setMemo] = useState(localStorage.getItem("memo"));
+  const [memo, setMemo] = useState("# memo");
 
   const [gapi, setGapi] = useState();
   const [googleAuth, setGoogleAuth] = useState();
@@ -73,6 +73,10 @@ const Home = () => {
     };
 
     loadGoogleScript();
+
+    if (localStorage.getItem("memo")) {
+      setMemo(localStorage.getItem("memo"));
+    }
   }, []);
 
   const addMemo = () => {
