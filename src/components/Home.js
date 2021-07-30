@@ -13,7 +13,7 @@ const API_KEY = "AIzaSyDeOz1nvw1M6om8N9xcoVJaXq2B8oDfgO0";
 const scope = "https://www.googleapis.com/auth/spreadsheets";
 
 const Home = () => {
-  const [memo, setMemo] = useState("# メモ \n```\n初めまして、私は\n```");
+  const [memo, setMemo] = useState(localStorage.getItem("memo"));
 
   const [gapi, setGapi] = useState();
   const [googleAuth, setGoogleAuth] = useState();
@@ -75,7 +75,7 @@ const Home = () => {
     loadGoogleScript();
   }, []);
 
-  const saveMemo = () => {
+  const addMemo = () => {
     axios({
       method: "post",
       url: memoApiUrl,
@@ -85,7 +85,7 @@ const Home = () => {
       },
       data: {
         function: "addMemo",
-        parameters: [memo],
+        parameters: [memo.toString()],
       },
     })
       .then((res) => {
@@ -110,12 +110,17 @@ const Home = () => {
       },
     })
       .then((res) => {
-        console.log(res.data.error);
-        //setMemo(res);
+        console.log(res.data.response.result.toString());
+        setMemo(res.data.response.result.toString());
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const saveMemo = (m) => {
+    setMemo(m);
+    localStorage.setItem("memo", memo);
   };
 
   return (
@@ -123,7 +128,7 @@ const Home = () => {
       {!isLoggedIn && <div id="google-signin"></div>}
       <div className="homeMemo">
         <div className="homeMemoBoxEdit">
-          <SimpleMDE value={memo} onChange={(e) => setMemo(e)} />
+          <SimpleMDE value={memo} onChange={(e) => saveMemo(e)} />
           <button
             onClick={() => {
               readMemo();
@@ -133,7 +138,7 @@ const Home = () => {
           </button>
           <button
             onClick={() => {
-              saveMemo();
+              addMemo();
             }}
           >
             上書き
