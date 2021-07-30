@@ -1,35 +1,57 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
+import marked from "marked";
+import highlight from "highlightjs";
+import "highlightjs/styles/dark.css";
 
 const Home = () => {
+  const [memo, setMemo] = useState("");
 
-    //const [response, setResponse] = useState('A');
+  const options = {
+    autofocus: true,
+    spellChecker: false,
+  };
 
+  useEffect(() => {
+    axios
+      .get("./memo/memo.txt")
+      .then((res) => {
+        setMemo(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-    useEffect(() => {
-        const { Client } = require('@notionhq/client');
-        const notion = new Client({ auth: process.env.NOTION_API_KEY });
-        
-        (async () => {
-            const response = await notion.databases.retrieve({ database_id: process.env.NOTION_TASKS_DB });
-            console.log(response);
-          })();
+  const saveMemo = (m) => {
+    setMemo(m);
+  };
 
-    }, []);
+  return (
+    <div className="homeItems">
+      <div className="homeTitle">
+        <h1>ホーム</h1>
+      </div>
 
+      <div className="homeMemo">
+        <SimpleMDE
+          value={memo}
+          options={options}
+          onChange={(e) => saveMemo(e)}
+        />
+      </div>
 
-    return (
-        <div>
+      <div>
+        <span dangerouslySetInnerHTML={{ __html: marked(memo) }} />
+      </div>
 
-            <div className="homeItems">
-                <h1>ホーム</h1>
-                <p>現在は22:00です。</p>
-                
-            </div>
+      <form>
+        <textarea></textarea>
+      </form>
+    </div>
+  );
+};
 
-        </div>
-    );
-}
-    
 export default Home;
