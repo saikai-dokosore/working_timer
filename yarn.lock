@@ -4665,7 +4665,7 @@
     "readable-stream" "^2.0.0"
     "stream-shift" "^1.0.0"
 
-"easymde@>= 2.0.0 < 3.0.0":
+"easymde@^2.15.0", "easymde@>= 2.0.0 < 3.0.0":
   "integrity" "sha512-9jMRIVvKt1d0UjRN45yotUYECAM4xvw0TTAQw8sYDONP++keWJVnd8Xrn+V+vQEN/v9/X0SWEoo1rFSgCooGpw=="
   "resolved" "https://registry.npmjs.org/easymde/-/easymde-2.15.0.tgz"
   "version" "2.15.0"
