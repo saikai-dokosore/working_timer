@@ -36,19 +36,15 @@ const Home = () => {
 
   return (
     <div className="homeItems">
-      <div className="homeTitle">
-        <h1>ホーム</h1>
-      </div>
-
       <div className="homeMemo">
-        <div className="homeMemoEdit">
+        <div className="homeMemoBoxEdit">
           <SimpleMDE
             value={memo}
             //options={options}
             onChange={(e) => saveMemo(e)}
           />
         </div>
-        <div className="homeMemoView">
+        <div className="homeMemoBoxView">
           <span dangerouslySetInnerHTML={{ __html: marked(memo) }} />
         </div>
       </div>
