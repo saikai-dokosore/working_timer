@@ -40,11 +40,18 @@ $bp : (
       }
 }
 
-[class ^="homeMemoBox"]{
-      width: 100%;
-      padding: 10px;
+.homeMemoBoxEdit {
+    flex: 4;
+    padding: 10px;
+    .cm-spell-error {
+        background: none!important;
     }
 
+}
+.homeMemoBoxView {
+    flex: 6;
+    padding: 10px;
+}
 
 .homeMemoBoxView {
     h1 {
@@ -84,6 +91,13 @@ $bp : (
         margin-left: 25px;
         line-height: 1.5;
         padding: 10px;
+    }
+    code {
+        display: block;
+        padding: 20px;
+        margin: 15px 0;
+        color: var(--Black-text);
+        background-color: var(--Gray-background);
     }
 }
 

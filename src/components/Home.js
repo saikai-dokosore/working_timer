@@ -3,15 +3,13 @@ import axios from "axios";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import marked from "marked";
-import hljs from "highlightjs";
-import "highlightjs/styles/nord.css";
 
 const Home = () => {
   const [memo, setMemo] = useState("");
 
   const options = {
     autofocus: true,
-    spellChecker: false,
+    //spellChecker: false,
   };
 
   useEffect(() => {
@@ -24,11 +22,6 @@ const Home = () => {
         console.log(err);
       });
   }, []);
-
-  useEffect(() => {
-    hljs.initHighlighting();
-    hljs.initHighlighting.called = false;
-  });
 
   const saveMemo = (m) => {
     setMemo(m);
@@ -50,7 +43,7 @@ const Home = () => {
       </div>
 
       <form>
-        <textarea></textarea>
+        <textarea value={marked(memo)}></textarea>
       </form>
     </div>
   );
