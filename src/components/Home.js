@@ -9,9 +9,11 @@ const googleClientId =
   "910124176690-go4g2s66msipo9bfdmr8gr4232v9e78i.apps.googleusercontent.com";
 const readMemoUrl =
   "https://script.googleapis.com/v1/scripts/AKfycbwCXY7YKm7S1VJv5xGItcsOJuT0JLuvM7wyrm8rrY6H9lcPZ99hGiU3MrRlwV6CKqXV7Q:run";
+const API_KEY = "AIzaSyDeOz1nvw1M6om8N9xcoVJaXq2B8oDfgO0";
+const scope = "https://www.googleapis.com/auth/spreadsheets";
 
 const Home = () => {
-  const [memo, setMemo] = useState("");
+  const [memo, setMemo] = useState("# メモ");
   const [gapi, setGapi] = useState();
   const [googleAuth, setGoogleAuth] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,6 +25,7 @@ const Home = () => {
     const profile = googleUser.getBasicProfile();
     setName(profile.getName());
     setEmail(profile.getEmail());
+    console.log(profile.getName() + " : " + profile.getEmail());
   };
 
   const onFailure = () => {
@@ -40,6 +43,13 @@ const Home = () => {
       onfailure: onFailure,
     });
   };
+  const logOut = () => {
+    (async () => {
+      await googleAuth.signOut();
+      setIsLoggedIn(false);
+      renderSigninButton(gapi);
+    })();
+  };
 
   useEffect(() => {
     window.onGoogleScriptLoad = () => {
@@ -49,17 +59,19 @@ const Home = () => {
       _gapi.load("auth2", () => {
         (async () => {
           const _googleAuth = await _gapi.auth2.init({
+            apiKey: API_KEY,
             client_id: googleClientId,
+            scope: scope,
           });
           setGoogleAuth(_googleAuth);
+          console.log(_googleAuth);
           renderSigninButton(_gapi);
         })();
       });
     };
 
     loadGoogleScript();
-    console.log(name + " : " + email);
-  }, []);
+  });
 
   const saveMemo = (m) => {
     setMemo(m);
@@ -69,6 +81,10 @@ const Home = () => {
     axios({
       method: "post",
       url: readMemoUrl,
+      headers: {
+        Authorization: "Bearer " + googleAuth,
+        "Content-Type": "application/json",
+      },
       data: {
         function: "readMemo",
         parameters: [],

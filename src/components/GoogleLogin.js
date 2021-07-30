@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from "react";
-
 export const loadGoogleScript = () => {
   // Loads the Google JavaScript Library
   (function () {
