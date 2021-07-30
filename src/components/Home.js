@@ -3,8 +3,8 @@ import axios from "axios";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import marked from "marked";
-import highlight from "highlightjs";
-import "highlightjs/styles/dark.css";
+import hljs from "highlightjs";
+import "highlightjs/styles/nord.css";
 
 const Home = () => {
   const [memo, setMemo] = useState("");
@@ -25,6 +25,11 @@ const Home = () => {
       });
   }, []);
 
+  useEffect(() => {
+    hljs.initHighlighting();
+    hljs.initHighlighting.called = false;
+  });
+
   const saveMemo = (m) => {
     setMemo(m);
   };
@@ -36,20 +41,17 @@ const Home = () => {
       </div>
 
       <div className="homeMemo">
-        <SimpleMDE
-          value={memo}
-          options={options}
-          onChange={(e) => saveMemo(e)}
-        />
+        <div className="homeMemoEdit">
+          <SimpleMDE
+            value={memo}
+            //options={options}
+            onChange={(e) => saveMemo(e)}
+          />
+        </div>
+        <div className="homeMemoView">
+          <span dangerouslySetInnerHTML={{ __html: marked(memo) }} />
+        </div>
       </div>
-
-      <div>
-        <span dangerouslySetInnerHTML={{ __html: marked(memo) }} />
-      </div>
-
-      <form>
-        <textarea></textarea>
-      </form>
     </div>
   );
 };
