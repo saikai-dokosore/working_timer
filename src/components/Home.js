@@ -18,6 +18,7 @@ const Home = () => {
   const [gapi, setGapi] = useState();
   const [googleAuth, setGoogleAuth] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [accessToken, setAccessToken] = useState("");
   const [name, setName] = useState("name");
   const [email, setEmail] = useState("email");
 
@@ -27,6 +28,7 @@ const Home = () => {
     setName(profile.getName());
     setEmail(profile.getEmail());
     console.log(profile.getName() + " : " + profile.getEmail());
+    setAccessToken(googleUser.Zb.access_token);
   };
 
   const onFailure = () => {
@@ -35,7 +37,7 @@ const Home = () => {
 
   const renderSigninButton = (_gapi) => {
     _gapi.signin2.render("google-signin", {
-      scope: "profile email",
+      scope: scope,
       width: 240,
       height: 50,
       longtitle: true,
@@ -65,21 +67,20 @@ const Home = () => {
             scope: scope,
           });
           setGoogleAuth(_googleAuth);
-          console.log(_googleAuth);
           renderSigninButton(_gapi);
         })();
       });
     };
 
     loadGoogleScript();
-  });
+  }, []);
 
   const saveMemo = (m) => {
     axios({
       method: "post",
       url: memoApiUrl,
       headers: {
-        Authorization: "Bearer " + googleAuth,
+        Authorization: "Bearer " + accessToken,
         "Content-Type": "application/json",
       },
       data: {
@@ -101,7 +102,7 @@ const Home = () => {
       method: "post",
       url: memoApiUrl,
       headers: {
-        Authorization: "Bearer " + googleAuth,
+        Authorization: "Bearer " + accessToken,
         "Content-Type": "application/json",
       },
       data: {
@@ -137,6 +138,13 @@ const Home = () => {
             }}
           >
             上書き
+          </button>
+          <button
+            onClick={() => {
+              logOut();
+            }}
+          >
+            Logout
           </button>
         </div>
         <div className="homeMemoBoxView">
