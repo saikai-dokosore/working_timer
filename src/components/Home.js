@@ -75,7 +75,7 @@ const Home = () => {
     loadGoogleScript();
   }, []);
 
-  const saveMemo = (m) => {
+  const saveMemo = () => {
     axios({
       method: "post",
       url: memoApiUrl,
@@ -89,8 +89,7 @@ const Home = () => {
       },
     })
       .then((res) => {
-        console.log("上書きテキスト：" + res);
-        setMemo(res);
+        console.log("上書きテキスト：" + memo);
       })
       .catch((err) => {
         console.log(err);
@@ -111,8 +110,8 @@ const Home = () => {
       },
     })
       .then((res) => {
-        console.log("同期テキスト：" + res);
-        setMemo(res);
+        console.log(res.data.error);
+        //setMemo(res);
       })
       .catch((err) => {
         console.log(err);
