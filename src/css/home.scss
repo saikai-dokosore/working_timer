@@ -32,8 +32,6 @@ $bp : (
     width: 100%;
     height: auto;
     margin: 30px 0;
-    background-color: var(--White-background);
-    //border: 3px solid;
 
     @include query (tablet){
         flex-direction: column;
@@ -78,7 +76,7 @@ $bp : (
 
     ul li {
         border-left: solid 6px var(--Black-text);
-        background: var(--Gray-background);
+        background-color: var(--White-background);
         margin-bottom: 3px;
         line-height: 1.5;
         padding: 10px;
@@ -97,11 +95,19 @@ $bp : (
         padding: 20px;
         margin: 15px 0;
         color: var(--Black-text);
-        background-color: var(--Gray-background);
+        background-color: var(--White-background);
+        border-radius: 10px;
+        box-shadow: 0 3px 15px rgba(0,0,0,0.1);
     }
 }
 
-button {
-    background-color: green;
-    color: white;
+.EasyMDEContainer {
+    .CodeMirror{
+        background-color: var(--White-background);
+    }
+    .editor-toolbar {
+        button {
+            color: var(--Gray-text)
+        }
+    } //border: 3px solid;
 }
