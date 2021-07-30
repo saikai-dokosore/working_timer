@@ -7,6 +7,8 @@ import marked from "marked";
 import { loadGoogleScript } from "./GoogleLogin";
 const googleClientId =
   "910124176690-go4g2s66msipo9bfdmr8gr4232v9e78i.apps.googleusercontent.com";
+const readMemoUrl =
+  "https://script.googleapis.com/v1/scripts/AKfycbwCXY7YKm7S1VJv5xGItcsOJuT0JLuvM7wyrm8rrY6H9lcPZ99hGiU3MrRlwV6CKqXV7Q:run";
 
 const Home = () => {
   const [memo, setMemo] = useState("");
@@ -57,10 +59,13 @@ const Home = () => {
 
     loadGoogleScript();
     console.log(name + " : " + email);
+  }, []);
 
-    const readMemoUrl =
-      "https://script.googleapis.com/v1/scripts/AKfycbwCXY7YKm7S1VJv5xGItcsOJuT0JLuvM7wyrm8rrY6H9lcPZ99hGiU3MrRlwV6CKqXV7Q:run";
+  const saveMemo = (m) => {
+    setMemo(m);
+  };
 
+  const readMemo = () => {
     axios({
       method: "post",
       url: readMemoUrl,
@@ -69,16 +74,13 @@ const Home = () => {
         parameters: [],
       },
     })
-      .then(function (response) {
-        console.log(response);
+      .then((res) => {
+        console.log("同期テキスト：" + res);
+        setMemo(res);
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
-  }, []);
-
-  const saveMemo = (m) => {
-    setMemo(m);
   };
 
   return (
@@ -87,6 +89,13 @@ const Home = () => {
       <div className="homeMemo">
         <div className="homeMemoBoxEdit">
           <SimpleMDE value={memo} onChange={(e) => saveMemo(e)} />
+          <button
+            onClick={() => {
+              readMemo();
+            }}
+          >
+            同期
+          </button>
         </div>
         <div className="homeMemoBoxView">
           <span dangerouslySetInnerHTML={{ __html: marked(memo) }} />
