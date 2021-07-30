@@ -48,6 +48,10 @@ const Home = () => {
           <span dangerouslySetInnerHTML={{ __html: marked(memo) }} />
         </div>
       </div>
+
+      <form>
+        <textarea></textarea>
+      </form>
     </div>
   );
 };
