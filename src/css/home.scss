@@ -4,13 +4,8 @@ $bp : (
   desktop : 1440px,
 );
  
-//Defining our Conditional Media query Mixins.
-//To save Time & Coffee.
- 
 @mixin query($display){
-  @each $key, $value in $bp{
- 
-    //  defining max-width
+  @each $key, $value in $bp {
     @if ($display == $key){
       @media (max-width: $value){@content;}
     }
@@ -22,11 +17,74 @@ $bp : (
     padding: 20px 20px;
     display: block;
     width: 100%;
+    @include query (tablet){
+        padding: 20px 0px;
+      }
 }
 
+.homeHeader {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    padding: 0 20px;
+
+    .homeHeaderTitle {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        font-size: 30px;
+        font-weight: 900;
+        letter-spacing: 5px;
+    }
+    .homeHeaderSetting {
+        height: 50px;
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.homeSettingModal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 200px;
+    background-color: var(--White-background);
+    border: 3px solid;
+    border-radius: 10px;
+    .homeSettingModalLogout, .homeSettingModalClose{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        height: 50px;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--Gray-text);
+        &:hover {
+            color: var(--Black-text);
+          }
+    }
+    .homeSettingModalClose {
+        border-top: 1px solid rgba(0,0,0,0.1);
+    }
+}
+
+.abcRioButton {
+    margin: 20px;
+    .abcRioButtonContentWrapper {
+        border: 3px solid var(--Black-text);
+        color: var(--Black-text);
+    }
+}
 
 .homeMemo {
-    
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -44,14 +102,24 @@ $bp : (
     .cm-spell-error {
         background: none!important;
     }
+    .EasyMDEContainer {
+        .CodeMirror{
+            background-color: var(--White-background);
+        }
+        .editor-toolbar {
+            button {
+                color: var(--Gray-text)
+            }
+        }
+    }
+    
 
 }
+
+
 .homeMemoBoxView {
     flex: 6;
     padding: 10px;
-}
-
-.homeMemoBoxView {
     h1 {
         font-size: 20px;
         font-weight: 700;
@@ -99,15 +167,4 @@ $bp : (
         border-radius: 10px;
         box-shadow: 0 3px 15px rgba(0,0,0,0.1);
     }
-}
-
-.EasyMDEContainer {
-    .CodeMirror{
-        background-color: var(--White-background);
-    }
-    .editor-toolbar {
-        button {
-            color: var(--Gray-text)
-        }
-    } //border: 3px solid;
 }

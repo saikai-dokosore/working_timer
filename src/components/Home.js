@@ -3,30 +3,28 @@ import axios from "axios";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import marked from "marked";
-
 import { loadGoogleScript } from "./GoogleLogin";
+import { Settings } from "react-feather";
+import { Tool } from "react-feather";
+import { XCircle } from "react-feather";
+
 const googleClientId =
   "910124176690-go4g2s66msipo9bfdmr8gr4232v9e78i.apps.googleusercontent.com";
 const memoApiUrl =
   "https://script.googleapis.com/v1/scripts/AKfycbwCXY7YKm7S1VJv5xGItcsOJuT0JLuvM7wyrm8rrY6H9lcPZ99hGiU3MrRlwV6CKqXV7Q:run";
-const API_KEY = "AIzaSyDeOz1nvw1M6om8N9xcoVJaXq2B8oDfgO0";
+const OAUTH_API_KEY = process.env.OAUTH_API_KEY;
 const scope = "https://www.googleapis.com/auth/spreadsheets";
 
 const Home = () => {
   const [memo, setMemo] = useState("# memo");
-
   const [gapi, setGapi] = useState();
   const [googleAuth, setGoogleAuth] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [accessToken, setAccessToken] = useState("");
-  const [name, setName] = useState("name");
-  const [email, setEmail] = useState("email");
 
   const onSuccess = (googleUser) => {
     setIsLoggedIn(true);
     const profile = googleUser.getBasicProfile();
-    setName(profile.getName());
-    setEmail(profile.getEmail());
     console.log(profile.getName() + " : " + profile.getEmail());
     setAccessToken(googleUser.Zb.access_token);
   };
@@ -41,7 +39,7 @@ const Home = () => {
       width: 240,
       height: 50,
       longtitle: true,
-      theme: "dark",
+      theme: "light",
       onsuccess: onSuccess,
       onfailure: onFailure,
     });
@@ -62,7 +60,7 @@ const Home = () => {
       _gapi.load("auth2", () => {
         (async () => {
           const _googleAuth = await _gapi.auth2.init({
-            apiKey: API_KEY,
+            apiKey: OAUTH_API_KEY,
             client_id: googleClientId,
             scope: scope,
           });
@@ -127,8 +125,47 @@ const Home = () => {
     localStorage.setItem("memo", memo);
   };
 
+  const openSettingModal = () => {
+    document.getElementById("homeSettingModal").style.display = "flex";
+  };
+  const closeSettingModal = () => {
+    document.getElementById("homeSettingModal").style.display = "none";
+  };
+
   return (
     <div className="homeItems">
+      <div className="homeHeader">
+        <div className="homeHeaderTitle">
+          <h1>Working</h1>
+        </div>
+        <button
+          className="homeHeaderSetting"
+          onClick={() => {
+            openSettingModal();
+          }}
+        >
+          <Tool />
+        </button>
+      </div>
+      <div className="homeSettingModal" id="homeSettingModal">
+        <button
+          className="homeSettingModalLogout"
+          onClick={() => {
+            logOut();
+            closeSettingModal();
+          }}
+        >
+          Logout
+        </button>
+        <button
+          className="homeSettingModalClose"
+          onClick={() => {
+            closeSettingModal();
+          }}
+        >
+          <XCircle />
+        </button>
+      </div>
       {!isLoggedIn && <div id="google-signin"></div>}
       <div className="homeMemo">
         <div className="homeMemoBoxEdit">
@@ -146,13 +183,6 @@ const Home = () => {
             }}
           >
             上書き
-          </button>
-          <button
-            onClick={() => {
-              logOut();
-            }}
-          >
-            Logout
           </button>
         </div>
         <div className="homeMemoBoxView">
