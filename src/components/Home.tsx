@@ -67,6 +67,7 @@ const Home: React.FC<Props> = () => {
     })();
   };
 
+
   useEffect(() => {
     window.onGoogleScriptLoad = () => {
       const _gapi = window.gapi;
