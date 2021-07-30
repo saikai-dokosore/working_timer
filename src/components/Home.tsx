@@ -4,7 +4,7 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import marked from "marked";
 import { loadGoogleScript } from "./GoogleLogin";
-import { Settings } from "react-feather";
+
 import { Tool } from "react-feather";
 import { XCircle } from "react-feather";
 
@@ -15,25 +15,40 @@ const memoApiUrl =
 const OAUTH_API_KEY = process.env.OAUTH_API_KEY;
 const scope = "https://www.googleapis.com/auth/spreadsheets";
 
-const Home = () => {
+
+
+interface Window {
+  onGoogleScriptLoad: any,
+  gapi: any,
+}
+declare var window: Window
+
+interface Props {
+  children?: React.ReactNode;
+}
+
+
+
+const Home: React.FC<Props> = () => {
   const [memo, setMemo] = useState("# memo");
-  const [gapi, setGapi] = useState();
-  const [googleAuth, setGoogleAuth] = useState();
+  const [gapi, setGapi] = useState<any>();
+  const [googleAuth, setGoogleAuth] = useState<any>();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [accessToken, setAccessToken] = useState("");
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const onSuccess = (googleUser) => {
+  const onSuccess = (googleUser: any): any => {
     setIsLoggedIn(true);
     const profile = googleUser.getBasicProfile();
     console.log(profile.getName() + " : " + profile.getEmail());
     setAccessToken(googleUser.Zb.access_token);
   };
 
-  const onFailure = () => {
+  const onFailure = (): any => {
     setIsLoggedIn(false);
   };
 
-  const renderSigninButton = (_gapi) => {
+  const renderSigninButton = (_gapi: any): any => {
     _gapi.signin2.render("google-signin", {
       scope: scope,
       width: 240,
@@ -44,7 +59,7 @@ const Home = () => {
       onfailure: onFailure,
     });
   };
-  const logOut = () => {
+  const logOut = (): any => {
     (async () => {
       await googleAuth.signOut();
       setIsLoggedIn(false);
@@ -72,12 +87,13 @@ const Home = () => {
 
     loadGoogleScript();
 
-    if (localStorage.getItem("memo")) {
-      setMemo(localStorage.getItem("memo"));
+    let localMemo: string | null = localStorage.getItem("memo");
+    if (localMemo) {
+      setMemo(localMemo);
     }
   }, []);
 
-  const addMemo = () => {
+  const addMemo = (): any => {
     axios({
       method: "post",
       url: memoApiUrl,
@@ -98,7 +114,7 @@ const Home = () => {
       });
   };
 
-  const readMemo = () => {
+  const readMemo = (): any => {
     axios({
       method: "post",
       url: memoApiUrl,
@@ -120,16 +136,18 @@ const Home = () => {
       });
   };
 
-  const saveMemo = (m) => {
+  const saveMemo = (m: any): any => {
     setMemo(m);
     localStorage.setItem("memo", memo);
   };
 
-  const openSettingModal = () => {
-    document.getElementById("homeSettingModal").style.display = "flex";
+  const openSettingModal = (): any => {
+    let modal :HTMLInputElement = document.getElementById("homeSettingModal") as HTMLInputElement;
+    modal.style.display = "flex";
   };
-  const closeSettingModal = () => {
-    document.getElementById("homeSettingModal").style.display = "none";
+  const closeSettingModal = (): any => {
+    let modal :HTMLInputElement = document.getElementById("homeSettingModal") as HTMLInputElement;
+    modal.style.display = "none";
   };
 
   return (
@@ -170,17 +188,11 @@ const Home = () => {
       <div className="homeMemo">
         <div className="homeMemoBoxEdit">
           <SimpleMDE value={memo} onChange={(e) => saveMemo(e)} />
-          <button
-            onClick={() => {
-              readMemo();
-            }}
-          >
+          <button onClick={()=>readMemo()}>
             同期
           </button>
           <button
-            onClick={() => {
-              addMemo();
-            }}
+            onClick={() => addMemo()}
           >
             上書き
           </button>

@@ -1,9 +1,14 @@
+interface Window {
+  onGoogleScriptLoad: any,
+}
+declare var window: Window
+
 export const loadGoogleScript = () => {
   (function () {
     const id = "google-js";
     const src = "https://apis.google.com/js/platform.js";
 
-    const firstJs = document.getElementsByTagName("script")[0];
+    const firstJs: any = document.getElementsByTagName("script")[0];
 
     if (document.getElementById(id)) {
       return;
