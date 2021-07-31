@@ -37,12 +37,22 @@ $bp : (
         font-weight: 900;
         letter-spacing: 5px;
     }
-    .homeHeaderSetting {
-        height: 50px;
-        width: 50px;
+
+    .homeHeaderBtnBox {
         display: flex;
         justify-content: center;
         align-items: center;
+        .homeHeaderSetting,.homeHeaderDownload,.homeHeaderUpload {
+            height: 50px;
+            width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--Gray-text);
+            &:hover {
+                color: var(--Black-text);
+            }
+        }
     }
 }
 

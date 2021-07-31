@@ -19,9 +19,15 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react"
   },
   "include": [
     "src"
-  ]
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "target": "ES2015",
+      "module": "CommonJS"
+    }
+  }
 }
