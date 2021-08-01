@@ -1,19 +1,19 @@
 interface Window {
-  onGoogleScriptLoad: any,
+  onGoogleScriptLoad: any;
 }
-declare var window: Window
+declare const window: Window;
 
 export const loadGoogleScript = () => {
   (function () {
-    const id = "google-js";
-    const src = "https://apis.google.com/js/platform.js";
+    const id = 'google-js';
+    const src = 'https://apis.google.com/js/platform.js';
 
-    const firstJs: any = document.getElementsByTagName("script")[0];
+    const firstJs: any = document.getElementsByTagName('script')[0];
 
     if (document.getElementById(id)) {
       return;
     }
-    const js = document.createElement("script");
+    const js = document.createElement('script');
     js.id = id;
     js.src = src;
     js.onload = window.onGoogleScriptLoad;
