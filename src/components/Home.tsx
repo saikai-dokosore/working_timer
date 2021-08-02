@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
-import marked from 'marked';
 import { loadGoogleScript } from './GoogleLogin';
 
 import { Tool } from 'react-feather';
@@ -208,11 +207,9 @@ const Home: React.FC<Props> = () => {
       </div>
       {!isLoggedIn && <div id="google-signin"></div>}
       <div className="homeMemo">
+        <div className="timer">this is timer</div>
         <div className="homeMemoBoxEdit">
           <SimpleMDE value={memo} onChange={(e) => saveMemo(e)} />
-        </div>
-        <div className="homeMemoBoxView">
-          <span dangerouslySetInnerHTML={{ __html: marked(memo) }} />
         </div>
       </div>
     </div>

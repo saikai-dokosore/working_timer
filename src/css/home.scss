@@ -107,23 +107,22 @@ $bp : (
 }
 
 .homeMemoBoxEdit {
-    flex: 4;
+    flex: 3;
     padding: 10px;
-    .cm-spell-error {
-        background: none!important;
-    }
     .EasyMDEContainer {
         .CodeMirror{
-            background-color: var(--White-background);
-        }
-        .editor-toolbar {
-            button {
-                color: var(--Gray-text)
-            }
+            background-color: var(--Gray-background);
         }
     }
-    
-
+  }
+  
+.timer {
+    flex: 1;
+    background-color: var(--Gray-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
 }
 
 
